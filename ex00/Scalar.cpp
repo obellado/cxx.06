@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include <climits>
 #include <iomanip>
+#include <cstdlib>
+
 #include "Scalar.hpp"
 
 Scalar::~Scalar( void ) {}
@@ -77,14 +78,14 @@ int Scalar::toInt(){
 	_str.compare(0, _str.length(), "-inff") == 0 ||
 	_n < INT_MIN || _n > INT_MAX )
 		throw Scalar::impossible();
-	for (int len = _str.length() - 2; len >= 1; --len ){
-		if (!isdigit(_arg[len]))
-			throw Scalar::impossible();
-	}
-	if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
-		throw Scalar::impossible();
-	if (!isdigit(_arg[0]) && _arg[0] != '-')
-		throw Scalar::impossible();
+	// for (int len = _str.length() - 2; len >= 1; --len ){
+	// 	if (!isdigit(_arg[len]))
+	// 		throw Scalar::impossible();
+	// }
+	// if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
+	// 	throw Scalar::impossible();
+	// if (!isdigit(_arg[0]) && _arg[0] != '-')
+	// 	throw Scalar::impossible();
     return (static_cast<int>(_n));
 }
 
@@ -93,14 +94,25 @@ float Scalar::toFloat(){
 		this->_n = static_cast<double>(_arg[1]);
 		return (static_cast<float>(_n));
 	}
-	for (int len = _str.length() - 2; len >= 1; --len ){
-		if (!isdigit(_arg[len]))
-			throw Scalar::impossible();
+	if (_str.compare(0, _str.length(), "nan") == 0 || \
+	_str.compare(0, _str.length(), "inf") == 0 || \
+	_str.compare(0, _str.length(), "+inf") == 0 || \
+	_str.compare(0, _str.length(), "-inf") == 0 || \
+	_str.compare(0, _str.length(), "nanf") == 0 || \
+	_str.compare(0, _str.length(), "inff") == 0 || \
+	_str.compare(0, _str.length(), "+inff") == 0 || \
+	_str.compare(0, _str.length(), "-inff") == 0 ) {
+		this->_n = std::atof(_arg);
+		return (static_cast<float>(_n));
 	}
-	if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
-		throw Scalar::impossible();
-	if (!isdigit(_arg[0]) && _arg[0] != '-')
-		throw Scalar::impossible();
+	// for (int len = _str.length() - 2; len >= 1; --len ){
+	// 	if (!isdigit(_arg[len]))
+	// 		throw Scalar::impossible();
+	// }
+	// if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
+	// 	throw Scalar::impossible();
+	// if (!isdigit(_arg[0]) && _arg[0] != '-')
+	// 	throw Scalar::impossible();
     return (static_cast<float>(_n));
 }
         
@@ -109,13 +121,24 @@ double Scalar::toDouble(){
 		this->_n = static_cast<double>(_arg[1]);
 		return (this->_n);
 	}
-	for (int len = _str.length() - 2; len >= 1; --len ){
-		if (!isdigit(_arg[len]) )
-			throw Scalar::impossible();
+	if (_str.compare(0, _str.length(), "nan") == 0 || \
+	_str.compare(0, _str.length(), "inf") == 0 || \
+	_str.compare(0, _str.length(), "+inf") == 0 || \
+	_str.compare(0, _str.length(), "-inf") == 0 || \
+	_str.compare(0, _str.length(), "nanf") == 0 || \
+	_str.compare(0, _str.length(), "inff") == 0 || \
+	_str.compare(0, _str.length(), "+inff") == 0 || \
+	_str.compare(0, _str.length(), "-inff") == 0 ) {
+		this->_n = std::atof(_arg);
+		return (this->_n);
 	}
-	if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
-		throw Scalar::impossible();
-	if (!isdigit(_arg[0]) && _arg[0] != '-')
-		throw Scalar::impossible();
+	// for (int len = _str.length() - 2; len >= 1; --len ){
+	// 	if (!isdigit(_arg[len]) )
+	// 		throw Scalar::impossible();
+	// }
+	// if (!isdigit(_arg[_str.length() - 1]) && _arg[_str.length() - 1] != 'f')
+	// 	throw Scalar::impossible();
+	// if (!isdigit(_arg[0]) && _arg[0] != '-')
+	// 	throw Scalar::impossible();
     return (this->_n);
 }
